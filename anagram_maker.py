@@ -25,13 +25,12 @@ class AnagramMaker:
     def sort(self, sign_dict):
         return OrderedDict(sorted(sign_dict.items()))
 
-    def output(self, anagram_dict):
-        with codecs.open(anagram_dict, "w", "utf-8") as f:
-            f.write("hoge")
+    def output(self, anagram_dict, dest):
+        with codecs.open(dest, "w", "utf-8") as f:
+            for k, v in anagram_dict.items():
+                f.write("%s %s\n" %(k, " ".join(v)))
 
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker()
-    anagram_maker.sort(anagram_maker.sign("./dict/original_words_short"))
-
-    anagram_maker.output("./dict/anagram_words_short")
+    anagram_maker.output(anagram_maker.sort(anagram_maker.sign("./dict/original_words_short")), "./dict/anagram_words_short")
