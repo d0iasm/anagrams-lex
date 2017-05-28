@@ -9,7 +9,7 @@ class AnagramMaker:
 
     def sign(self, file_name):
         
-        d = defaultdict(list)
+        d = defaultdict(set)
 
         f = open(file_name)
         line = f.readline()
@@ -19,13 +19,13 @@ class AnagramMaker:
             char_list.sort()
             sign = "".join(char_list)
             
-            d.update({sign: word})
+            d[sign].add(word)
             
             line = f.readline()
         
         
-        print(d.items())
-        print(d["aaccr"])
+        print(d)
+        print(d["aacehn"])
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker()
