@@ -32,9 +32,10 @@ class AnagramSearcher:
             elif center_sign > sign:
                 high = center - 1
             else:
-                break
+                print(center_words_list)
+                return
         
-        print(center_words_list)
+        print("not find anagrams")
 
 
 if __name__ == '__main__':
