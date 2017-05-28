@@ -1,4 +1,5 @@
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
+
 from functools import reduce
 
 
@@ -7,10 +8,9 @@ class AnagramMaker:
     def __init__(self):
         pass
 
-    def sign(self, file_name):
-        
+    def sign(self, file_name): 
         d = defaultdict(set)
-
+        
         with open(file_name) as f:
             for line in f:
                 word = line.lower().strip()
@@ -20,13 +20,12 @@ class AnagramMaker:
             
                 d[sign].add(word)
             
-        #print(d)
-        #print(d["aacehn"])
         return d
 
     def sort(self, sign_dict):
-        for k, v in sorted(sign_dict.items()):
-            print(k, v)
+        print(OrderedDict(sorted(sign_dict.items())))
+        #for , v in sorted(sign_dict.items()):
+            #print(k, v)
 
 
 
