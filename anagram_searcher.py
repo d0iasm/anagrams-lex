@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import linecache
 
 
@@ -14,11 +17,19 @@ class AnagramSearcher:
         word = word.lower().strip()
         char_list = list(word)
         char_list.sort()
-        #sign = "".join(char_list)
+        sign = "".join(char_list)
         #print(char_list)
 
-        center_words = linecache.getline(self.dict, (low+high) / 2)
-        print(center_words.split())
+        while low != high:
+            center = int((low+high) / 2)
+            center_words = linecache.getline(self.dict, center).split()
+            center_sign = center_words[0]
+            if center_sign < word:
+                low = center + 1
+            elif center_sign > word:
+                high = center - 1
+            
+        print(center_words)
 
 
 if __name__ == '__main__':
