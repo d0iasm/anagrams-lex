@@ -10,7 +10,7 @@ class AnagramSearcher:
         self.dict = "./dict/anagram_words"
         self.num = sum(1 for line in open(self.dict))
 
-    def search(self, word):
+    def search(self, word=input('--> ')):
         low = 0
         high = self.num
 
@@ -37,3 +37,4 @@ class AnagramSearcher:
 if __name__ == '__main__':
     anagram_searcher = AnagramSearcher()
     anagram_searcher.search("design")
+    anagram_searcher.search()

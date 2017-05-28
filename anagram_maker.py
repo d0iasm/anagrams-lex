@@ -1,4 +1,7 @@
-from collections import defaultdict, OrderedDict
+f#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+rom collections import defaultdict, OrderedDict
 import codecs
 
 
