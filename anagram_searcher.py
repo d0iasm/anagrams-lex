@@ -30,7 +30,8 @@ class AnagramSearcher:
 
     def search(self, word=input('--> ')):
         if len(word) < 3:
-            return
+            print("at least 3 chars")
+            return self.search(input('--> '))
 
         low = 0
         high = self.num
@@ -51,9 +52,10 @@ class AnagramSearcher:
                 high = center - 1
             else:
                 print(self.high_score(center_words_list))
-                return
+                return self.search(input('--> '))
         
         print("not find anagrams")
+        self.search(input('--> '))
 
 
 if __name__ == '__main__':
