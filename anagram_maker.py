@@ -11,21 +11,24 @@ class AnagramMaker:
         
         d = defaultdict(set)
 
-        f = open(file_name)
-        line = f.readline()
-        while line:
-            word = line.lower().strip()
-            char_list = list(word)
-            char_list.sort()
-            sign = "".join(char_list)
-            
-            d[sign].add(word)
-            
+        with open(file_name) as f:
             line = f.readline()
-        
-        
+            while line:
+                word = line.lower().strip()
+                char_list = list(word)
+                char_list.sort()
+                sign = "".join(char_list)
+            
+                d[sign].add(word)
+            
+                line = f.readline()
+
         print(d)
         print(d["aacehn"])
+
+    def sort(self, sign_dict):
+        pass
+
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker()
