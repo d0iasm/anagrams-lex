@@ -1,5 +1,5 @@
 from collections import defaultdict, OrderedDict
-
+import codecs
 from functools import reduce
 
 
@@ -11,7 +11,7 @@ class AnagramMaker:
     def sign(self, file_name): 
         d = defaultdict(set)
         
-        with open(file_name) as f:
+        with open(file_name, "r") as f:
             for line in f:
                 word = line.lower().strip()
                 char_list = list(word)
@@ -23,12 +23,15 @@ class AnagramMaker:
         return d
 
     def sort(self, sign_dict):
-        print(OrderedDict(sorted(sign_dict.items())))
-        #for , v in sorted(sign_dict.items()):
-            #print(k, v)
+        return OrderedDict(sorted(sign_dict.items()))
 
+    def output(self, anagram_dict):
+        with codecs.open(anagram_dict, "w", "utf-8") as f:
+            f.write("hoge")
 
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker()
     anagram_maker.sort(anagram_maker.sign("./dict/original_words_short"))
+
+    anagram_maker.output("./dict/anagram_words_short")
