@@ -12,8 +12,9 @@ class AnagramMaker:
         d = defaultdict(set)
 
         with open(file_name) as f:
-            line = f.readline()
-            while line:
+            #line = f.readline()
+            #while line:
+            for line in f:
                 word = line.lower().strip()
                 char_list = list(word)
                 char_list.sort()
@@ -21,7 +22,7 @@ class AnagramMaker:
             
                 d[sign].add(word)
             
-                line = f.readline()
+                #line = f.readline()
 
         print(d)
         print(d["aacehn"])
