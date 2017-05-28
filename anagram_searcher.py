@@ -18,20 +18,22 @@ class AnagramSearcher:
         char_list = list(word)
         char_list.sort()
         sign = "".join(char_list)
-        #print(char_list)
 
         while low != high:
             center = int((low+high) / 2)
-            center_words = linecache.getline(self.dict, center).split()
-            center_sign = center_words[0]
-            if center_sign < word:
+            center_words = linecache.getline(self.dict, center)
+            center_words_list = center_words.split()
+            center_sign = center_words_list[0]
+            if center_sign < sign:
                 low = center + 1
-            elif center_sign > word:
+            elif center_sign > sign:
                 high = center - 1
-            
-        print(center_words)
+            else:
+                break
+        
+        print(center_words_list)
 
 
 if __name__ == '__main__':
     anagram_searcher = AnagramSearcher()
-    anagram_searcher.search("star")
+    anagram_searcher.search("design")
