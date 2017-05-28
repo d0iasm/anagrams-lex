@@ -12,8 +12,6 @@ class AnagramMaker:
         d = defaultdict(set)
 
         with open(file_name) as f:
-            #line = f.readline()
-            #while line:
             for line in f:
                 word = line.lower().strip()
                 char_list = list(word)
@@ -22,15 +20,16 @@ class AnagramMaker:
             
                 d[sign].add(word)
             
-                #line = f.readline()
-
-        print(d)
-        print(d["aacehn"])
+        #print(d)
+        #print(d["aacehn"])
+        return d
 
     def sort(self, sign_dict):
-        pass
+        for k, v in sorted(sign_dict.items()):
+            print(k, v)
+
 
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker()
-    anagram_maker.sign("./dict/original_words_short")
+    anagram_maker.sort(anagram_maker.sign("./dict/original_words_short"))
