@@ -10,19 +10,19 @@ class AnagramSearcher:
         self.dict = "./dict/anagram_words"
         self.num = sum(1 for line in open(self.dict))
 
-    def high_score(self, words_list):
+    def high_score(words_list):
         words_list = words_list[1:]
-        
-        three_points = ['j', 'k', 'q', 'x', 'z']
-        two_points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
+        print(words_list)
+        3points = ['j', 'k', 'q', 'x', 'z']
+        2points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
 
         for word in words_list:
-            for char in three_points:
+            for char in 3points:
                 if char in word:
                     return word
 
-            for char in two_points:
-                if char in word:
+            for char in 2points:
+                if char in word
                     return word
 
         return words_list[0]
@@ -50,7 +50,8 @@ class AnagramSearcher:
             elif center_sign > sign:
                 high = center - 1
             else:
-                print(self.high_score(center_words_list))
+                high_score(center_words_list)
+                print(center_words_list)
                 return
         
         print("not find anagrams")
@@ -58,4 +59,5 @@ class AnagramSearcher:
 
 if __name__ == '__main__':
     anagram_searcher = AnagramSearcher()
+    anagram_searcher.search("design")
     anagram_searcher.search()
