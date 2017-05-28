@@ -1,3 +1,7 @@
+from collections import defaultdict
+from functools import reduce
+
+
 class AnagramMaker:
 
     def __init__(self):
@@ -5,22 +9,23 @@ class AnagramMaker:
 
     def sign(self, file_name):
         
-        def list_to_dict(key_list, val_list):
-            return dict(zip(key_list, val_list))
+        d = defaultdict(list)
 
         f = open(file_name)
         line = f.readline()
         while line:
-            lower_line = line.lower().strip()
-            char_list = list(lower_line)
+            word = line.lower().strip()
+            char_list = list(word)
             char_list.sort()
-            print("".join(char_list))
+            sign = "".join(char_list)
+            
+            d.update({sign: word})
+            
             line = f.readline()
-
-        key_list = ["a", "b", "c"]
-        val_list = ["hoge", "hoge", "hoge"]
-        print(list_to_dict(key_list, val_list))
-
+        
+        
+        print(d.items())
+        print(d["aaccr"])
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker()
