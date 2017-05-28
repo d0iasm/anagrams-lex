@@ -11,6 +11,9 @@ class AnagramSearcher:
         self.num = sum(1 for line in open(self.dict))
 
     def search(self, word=input('--> ')):
+        if len(word) < 3:
+            return
+
         low = 0
         high = self.num
 
