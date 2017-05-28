@@ -1,6 +1,3 @@
-import sys
-
-
 class AnagramMaker:
 
     def __init__(self):
@@ -17,7 +14,7 @@ class AnagramMaker:
             lower_line = line.lower().strip()
             char_list = list(lower_line)
             char_list.sort()
-            print(char_list)
+            print("".join(char_list))
             line = f.readline()
 
         key_list = ["a", "b", "c"]
