@@ -32,5 +32,5 @@ class AnagramMaker:
 
 
 if __name__ == '__main__':
-    anagram_maker = AnagramMaker("./dict/original_words_short", "./dict/anagram_words_short")
+    anagram_maker = AnagramMaker("./dict/original_words", "./dict/anagram_words")
     anagram_maker.output(anagram_maker.sort(anagram_maker.sign()))
