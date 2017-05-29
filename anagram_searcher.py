@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import linecache
+import itertools
 
 
 class AnagramSearcher:
@@ -16,6 +17,10 @@ class AnagramSearcher:
         three_points = ['j', 'k', 'q', 'x', 'z']
         two_points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
 
+        print(list(filter((lambda x: [x for char in three_points if char in x]), words_list)))
+        print(list(filter((lambda x: [x for char in two_points if char in x]), words_list)))
+
+
         for word in words_list:
             for char in three_points:
                 if char in word:
@@ -26,7 +31,6 @@ class AnagramSearcher:
                     return word
 
         return words_list[0]
-
 
     def search(self, word=input('--> ')):
         if len(word) < 3:
