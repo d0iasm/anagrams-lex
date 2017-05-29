@@ -17,18 +17,12 @@ class AnagramSearcher:
         three_points = ['j', 'k', 'q', 'x', 'z']
         two_points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
 
-        print(list(filter((lambda x: [x for char in three_points if char in x]), words_list)))
-        print(list(filter((lambda x: [x for char in two_points if char in x]), words_list)))
-
-
         for word in words_list:
             for char in three_points:
-                if char in word:
-                    return word
+                if char in word: return word
 
             for char in two_points:
-                if char in word:
-                    return word
+                if char in word: return word
 
         return words_list[0]
 
