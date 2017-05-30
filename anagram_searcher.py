@@ -53,7 +53,7 @@ class AnagramSearcher:
             else: high = center - 1
 
         print("not find anagrams")
-        return self.search(input('--> '))
+        return self.search(input('--> ') + word)
 
 
 if __name__ == '__main__':
