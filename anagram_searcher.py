@@ -44,17 +44,14 @@ class AnagramSearcher:
             center_words = linecache.getline(self.dict, center)
             center_words_list = center_words.split()
             center_sign = center_words_list[0]
-            center_sign_list = list(center_sign)
             
-            if all(x in char_list for x in center_sign_list):
+            if all(x in sign for x in center_sign):
                 print(self.high_score(center_words_list))
                 return self.search(input('--> '))
+            
+            if center_sign < sign: low = center + 1
+            else: high = center - 1
 
-            if center_sign < sign:
-                low = center + 1
-            elif center_sign > sign:
-                high = center - 1
-        
         print("not find anagrams")
         return self.search(input('--> '))
 
