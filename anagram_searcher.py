@@ -3,6 +3,7 @@
 
 import linecache
 import itertools
+from dict import anagram_words as dict
 
 
 class Node:
@@ -11,6 +12,7 @@ class Node:
         self.next = {}
         self.output = []
         self.failure = 0
+
 
 class Trie:
     def __init__ (self, dict):
@@ -31,10 +33,9 @@ class Trie:
                 current = current.next[char]
             current.output.append(word)
 
-
     def _make_failure(self):
         """Create return positon if no next Node"""
-        
+
         queue = [0]
         while len(queue) > 0:
             id = queue.pop(0)
@@ -49,7 +50,6 @@ class Trie:
                     self.node[next].failure = max_suffix
                     self.node[next].output.extend(self.node[max_suffix].output)
 
-
     def goto(self, id, char):
         """Move Node by number of Node and char of query"""
 
@@ -58,7 +58,6 @@ class Trie:
         else:
             if id == 0: return 0
             else: return None
-
 
     def lookup(self, query):
         """Look up all words matching the dict from Trie"""
@@ -73,18 +72,16 @@ class Trie:
                 id = self.node[id].failure
             id = self.goto(id, char)
 
-        print(matched_words)
+        return matched_words
 
 
-class AnagramSearcher:
+class Searcher:
 
     def __init__(self):
-        self.dict = "./dict/anagram_words"
-        self.num = sum(1 for line in open(self.dict))
+        sign_list = dict.data.keys()
+        self.trie = Trie(sign_list)
 
     def high_score(self, words_list):
-        words_list = words_list[1:]
-        
         three_points = ['j', 'k', 'q', 'x', 'z']
         two_points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
 
@@ -97,51 +94,27 @@ class AnagramSearcher:
 
         return words_list[0]
 
-    def search(self, word=input('--> ')):
+    def search(self, word=input("--> ")):
         if len(word) < 3:
             print("at least 3 chars")
-            return self.search(input('--> '))
-
-        low = 0
-        high = self.num
+            return self.search(input("--> "))
 
         word = word.lower().strip()
+        print("input: " + word)
         char_list = list(word)
         char_list.sort()
         sign = "".join(char_list)
 
-        while low != high:
-            center = int((low+high) / 2)
-            center_words = linecache.getline(self.dict, center)
-            center_words_list = center_words.split()
-            center_sign = center_words_list[0]
-            
-            if all(x in sign for x in center_sign):
-                print(self.high_score(center_words_list))
-                return self.search(input('--> '))
-            
-            if center_sign < sign: low = center + 1
-            else: high = center - 1
+        matched_words = self.trie.lookup(sign)
+        if len(matched_words) == 0:
+            print("not find anagrams")
+        else:
+            high_score_sign = self.high_score(matched_words)
+            print(dict.data[high_score_sign])
 
-        print("not find anagrams")
-        return self.search(input('--> ') + word)
+        return self.search(input("--> "))
 
 
 if __name__ == '__main__':
-    anagram_searcher = AnagramSearcher()
-    anagram_searcher.search()
-
-    dict_path = './dict/anagram_words'
-    dict_list = [line for line in open(dict_path)]
-    sign_list = [line.split()[0] for line in dict_list]
-    trie = Trie(sign_list)
-    print(sign_list)
-
-    word = (input("--> "))
-    word = word.lower().strip()
-    char_list = list(word)
-    char_list.sort()
-    sign = "".join(char_list)
-    print("sign:" + sign)
-    trie.lookup(sign)
-
+    searcher = Searcher()
+    searcher.search()
