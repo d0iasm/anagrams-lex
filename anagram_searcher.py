@@ -16,6 +16,8 @@ class Node:
 
 class Trie:
     def __init__ (self, dict):
+        self.matched_words = set()
+        self.thread = {}
         self.node  = [ Node(0) ]
         self._make_goto(dict)
         self._make_failure()
@@ -59,20 +61,34 @@ class Trie:
             if id == 0: return 0
             else: return None
 
-    def lookup(self, query):
+    def lookup(self, query, id=0):
         """Look up all words matching the dict from Trie"""
-
-        id = 0
-        matched_words = []
-        for char in query:
+        
+        print("input query: "+query)
+        for i in range(len(query)):
+            print("current char: "+query[i])
+            print("id: "+str(id))
+            print("query: "+str(query[i:]))
+            #if id == None: return self.matched_words
+            
             output = self.node[id].output
-            if not len(output) == 0: matched_words.extend(output)
+            if not len(output) == 0:
+                for matching in output:
+                    self.matched_words.add(matching)
 
-            while self.goto(id, char) is None:
+            while self.goto(id, query[i]) is None:
+                if len(query[i:]) > 1:
+                    self.thread[id] = query[i+1:]
+                    print("thread追加した: "+str(id))
                 id = self.node[id].failure
-            id = self.goto(id, char)
+            id = self.goto(id, query[i])
 
-        return matched_words
+        print(self.thread)
+        while self.thread:
+            item = self.thread.popitem()
+            self.lookup(item[1], item[0])
+
+        return list(self.matched_words)
 
 
 class Searcher:
@@ -117,9 +133,9 @@ class Searcher:
         if len(matched_words) == 0:
             print("not find anagrams")
         else:
-            print(matched_words)
-            #high_score_sign = self.high_score(matched_words)
-            #print(dict.data[high_score_sign])
+            #print(matched_words)
+            high_score_sign = self.high_score(matched_words)
+            print(dict.data[high_score_sign])
 
         return self.search(input("--> "))
 
