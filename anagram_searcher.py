@@ -82,17 +82,25 @@ class Searcher:
         self.trie = Trie(sign_list)
 
     def high_score(self, words_list):
+        point_list = [0] * len(words_list)
+        high_score_index = 0
+
         three_points = ['j', 'k', 'q', 'x', 'z']
         two_points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
 
-        for word in words_list:
+        for i in range(len(words_list)):
+            point_list[i] += 1
             for char in three_points:
-                if char in word: return word
+                if char in words_list[i]: point_list[i] += 1
 
             for char in two_points:
-                if char in word: return word
+                if char in words_list[i]: point_list[i] += 2
 
-        return words_list[0]
+            if not i == 0:
+                point_list[i-1] < point_list[i]
+                high_score_index = i
+
+        return words_list[high_score_index]
 
     def search(self, word=input("--> ")):
         if len(word) < 3:
@@ -109,8 +117,9 @@ class Searcher:
         if len(matched_words) == 0:
             print("not find anagrams")
         else:
-            high_score_sign = self.high_score(matched_words)
-            print(dict.data[high_score_sign])
+            print(matched_words)
+            #high_score_sign = self.high_score(matched_words)
+            #print(dict.data[high_score_sign])
 
         return self.search(input("--> "))
 
