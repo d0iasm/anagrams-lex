@@ -1,7 +1,7 @@
-f#!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-rom collections import defaultdict, OrderedDict
+from collections import defaultdict, OrderedDict
 import codecs
 
 
@@ -33,7 +33,21 @@ class AnagramMaker:
             for k, v in anagram_dict.items():
                 f.write("%s %s\n" %(k, " ".join(v)))
 
+    def format(self):
+        dict_list = [line for line in open(self.origin)]
+        key_list = [line.split()[0] for line in dict_list]
+        value_list = [line.split()[1:] for line in dict_list]
+        anagram_dict = dict(zip(key_list, value_list))
+
+        with codecs.open(self.dest, "w", "utf-8") as f:
+            f.write("data = ")
+            f.write(str(anagram_dict))
+
+
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker("./dict/original_words", "./dict/anagram_words")
     anagram_maker.output(anagram_maker.sort(anagram_maker.sign()))
+
+    anagram_maker = AnagramMaker("./dict/anagram_words", "./dict/anagram_words.py")
+    anagram_maker.format()
