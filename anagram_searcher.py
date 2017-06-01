@@ -12,6 +12,7 @@ class Node:
         self.next = {}
         self.output = []
         self.failure = 0
+        self.footprint = {}
 
 
 class Trie:
@@ -52,6 +53,12 @@ class Trie:
                     self.node[next].failure = max_suffix
                     self.node[next].output.extend(self.node[max_suffix].output)
 
+    def reset(self):
+        self.matched_words = set()
+        self.thread = {}
+        for node in self.node:
+            node.footprint = {}
+
     def goto(self, id, char):
         """Move Node by number of Node and char of query"""
 
@@ -63,14 +70,9 @@ class Trie:
 
     def lookup(self, query, id=0):
         """Look up all words matching the dict from Trie"""
-        
+
         print("input query: "+query)
         for i in range(len(query)):
-            print("current char: "+query[i])
-            print("id: "+str(id))
-            print("query: "+str(query[i:]))
-            #if id == None: return self.matched_words
-            
             output = self.node[id].output
             if not len(output) == 0:
                 for matching in output:
@@ -78,12 +80,16 @@ class Trie:
 
             while self.goto(id, query[i]) is None:
                 if len(query[i:]) > 1:
-                    self.thread[id] = query[i+1:]
-                    print("thread追加した: "+str(id))
+                    if not query[i+1:] in self.node[id].footprint.get(id, ""):
+                        
+                        if not id in self.node[id].footprint:
+                            self.node[id].footprint[id] = [query[i+1:]]
+                        else:
+                            self.node[id].footprint[id].append(query[i+1:])
+                        self.thread[id] = query[i+1:]
                 id = self.node[id].failure
             id = self.goto(id, query[i])
 
-        print(self.thread)
         while self.thread:
             item = self.thread.popitem()
             self.lookup(item[1], item[0])
@@ -130,9 +136,12 @@ class Searcher:
         sign = "".join(char_list)
 
         matched_words = self.trie.lookup(sign)
+        self.trie.reset()
         if len(matched_words) == 0:
             print("not find anagrams")
         else:
+            for i in matched_words:
+                print(dict.data[i])
             #print(matched_words)
             high_score_sign = self.high_score(matched_words)
             print(dict.data[high_score_sign])
