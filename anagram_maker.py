@@ -6,14 +6,14 @@ import codecs
 
 
 class AnagramMaker(object):
-
+    """Make dictionary for anagram."""
     def __init__(self, origin, dest):
         self.origin = origin
         self.dest = dest
 
-    def sign(self): 
+    def sign(self):
+        """Return dictionary of sorted signs and words from origin dictionary."""
         d = defaultdict(set)
-        
         with open(self.origin, "r") as f:
             for line in f:
                 word = line.lower().strip()
@@ -25,15 +25,18 @@ class AnagramMaker(object):
         return d
 
     def sort(self, dict):
+        """Sort signs alphabetically."""
         return OrderedDict(sorted(dict.items()))
 
     def output(self):
+        """Output sorted dictionary."""
         anagrams = self.sort(self.sign())
         with codecs.open(self.dest, "w", "utf-8") as f:
             for k, v in anagrams.items():
                 f.write("%s %s\n" %(k, " ".join(v)))
 
     def format(self):
+        """Format Python package."""
         dict_list = [line for line in open(self.origin)]
         key_list = [line.split()[0] for line in dict_list]
         value_list = [line.split()[1:] for line in dict_list]

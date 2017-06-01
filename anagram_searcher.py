@@ -7,6 +7,7 @@ from dict import anagram_words as dict
 
 
 class Node(object):
+    """Element of trie."""
     def __init__ (self, id):
         self.id   = id
         self.next = {}
@@ -16,16 +17,16 @@ class Node(object):
 
 
 class Trie(object):
+    """Preprocessing to find anagram."""
     def __init__ (self, dict):
         self.matched_words = set()
         self.thread = {}
-        self.node  = [ Node(0) ]
+        self.node = [Node(0)]
         self._make_goto(dict)
         self._make_failure()
 
     def _make_goto(self, dict):
-        """Create Trie associated with Node and next Node"""
-
+        """Create Trie associated with current node and next."""
         for word in dict:
             current = self.node[0]
             for char in word:
@@ -37,8 +38,7 @@ class Trie(object):
             current.output.append(word)
 
     def _make_failure(self):
-        """Create return positon if no next Node"""
-
+        """Create return positon if no next node."""
         queue = [0]
         while len(queue) > 0:
             id = queue.pop(0)
@@ -54,23 +54,22 @@ class Trie(object):
                     self.node[next].output.extend(self.node[max_suffix].output)
 
     def reset(self):
+        """Reset the variable when finding continuously."""
         self.matched_words = set()
         self.thread = {}
         for node in self.node:
             node.footprint = {}
 
     def goto(self, id, char):
-        """Move Node by number of Node and char of query"""
-
+        """Move node by current position and next char."""
         if char in self.node[id].next:
             return self.node[id].next[char].id
         else:
             if id == 0: return 0
             else: return None
 
-    def lookup(self, query, id=0):
-        """Look up all words matching the dict from Trie"""
-
+    def find(self, query, id=0):
+        """Find all words matching the dict from Trie."""
         for i in range(len(query)):
             output = self.node[id].output
             if not len(output) == 0:
@@ -79,9 +78,8 @@ class Trie(object):
 
             while self.goto(id, query[i]) is None:
                 if len(query[i:]) > 1:
-                    if not query[i+1:] in self.node[id].footprint.get(id, ""):
-
-                        if not id in self.node[id].footprint:
+                    if query[i+1:] not in self.node[id].footprint.get(id, ""):
+                        if id not in self.node[id].footprint:
                             self.node[id].footprint[id] = [query[i+1:]]
                         else:
                             self.node[id].footprint[id].append(query[i+1:])
@@ -91,17 +89,19 @@ class Trie(object):
 
         while self.thread:
             item = self.thread.popitem()
-            self.lookup(item[1], item[0])
+            self.find(item[1], item[0])
 
         return list(self.matched_words)
 
 
-class Searcher(object):
+class Anagram(object):
+    """Find anagram with high score using Trie."""
     def __init__(self):
         sign_list = dict.data.keys()
         self.trie = Trie(sign_list)
 
     def high_score(self, words_list):
+        """Return highest score and word."""
         high_score_word = words_list[0]
         high_score = 0
 
@@ -119,14 +119,15 @@ class Searcher(object):
             if high_score < point:
                 high_score = point
                 high_score_word = word
-            
+
             print("{0}: {1}".format(dict.data[word][0], point*point))
         return high_score_word, high_score*high_score
 
-    def search(self, word=input("--> ")):
+    def find(self, word=input("--> ")):
+        """Find anagram matching dictionary."""
         if len(word) < 3:
             print("at least 3 chars")
-            return self.search(input("--> "))
+            return self.find(input("--> "))
 
         word = word.lower().strip()
         print("input: " + word)
@@ -134,18 +135,18 @@ class Searcher(object):
         char_list.sort()
         sign = "".join(char_list)
 
-        matched_words = self.trie.lookup(sign)
+        matched_words = self.trie.find(sign)
         self.trie.reset()
         if len(matched_words) == 0:
             print("not find anagrams")
         else:
             sign, high_score = self.high_score(matched_words)
-            print("recomended word")
+            print("-- recomended word --")
             print("{0}: {1}".format(dict.data[sign][0], high_score))
 
-        return self.search(input("--> "))
+        return self.find(input("--> "))
 
 
 if __name__ == '__main__':
-    searcher = Searcher()
-    searcher.search()
+    anagram = Anagram()
+    anagram.find()
