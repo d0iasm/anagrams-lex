@@ -23,11 +23,11 @@ If an error occurs interrupt program and try again.
 
 ## About Idea
 
-### 1.Rewrite dictionary for anagram  
+### 1. Rewrite dictionary for anagram  
 This work is done by ``anagram_maker.py``.  
 Output is in ``dict/``.  
 
-### 2.Build Trie based on anagram dictionary  
+### 2. Build Trie based on anagram dictionary  
 The structure of Trie is made by node and edges of characters of words in the dictionary.  
 
 **Trie field**  
@@ -42,7 +42,7 @@ The structure of Trie is made by node and edges of characters of words in the di
 - failture --- number of the returning node when failing to move  
 - footpoint --- threads record to avoid loop  
 
-### 3.Find words by following nodes
+### 3. Find words by following nodes
 Following nodes will all the words in dictionary, but return the highest score word.  
 
 
