@@ -14,12 +14,14 @@ class WebDriver(object):
         chars = self.driver.find_elements_by_class_name('letter')
         word = []
         for char in chars:
-            word.append(char.text)
+            word.append(char.text.lower())
         word = "".join(word)
+        if "qu" in word: word = word.replace("qu", "q")
 
         anagram = self.finder.find(word)
+        print(anagram)
         self.driver.find_element_by_id('MoveField').send_keys(anagram)
-
+        
         inputs = self.driver.find_elements_by_tag_name('input')
         for input in inputs:
             if input.get_attribute("value") == "Submit":
@@ -35,4 +37,4 @@ if __name__ == '__main__':
     webdriver = WebDriver()
     for i in range(10):
         webdriver.solve()
-    webdriver.close()
+    # webdriver.close()
