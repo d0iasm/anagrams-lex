@@ -13,7 +13,7 @@ class Node(object):
         self.next = {}
         self.output = []
         self.failure = 0
-        self.footprint = {}
+        self.footprint = []
 
 
 class Trie(object):
@@ -58,7 +58,7 @@ class Trie(object):
         self.matched_words = set()
         self.thread = {}
         for node in self.node:
-            node.footprint = {}
+            node.footprint = []
 
     def goto(self, id, char):
         """Move node by current position and next char."""
@@ -78,11 +78,8 @@ class Trie(object):
 
             while self.goto(id, query[i]) is None:
                 if len(query[i:]) > 1:
-                    if query[i+1:] not in self.node[id].footprint.get(id, ""):
-                        if id not in self.node[id].footprint:
-                            self.node[id].footprint[id] = [query[i+1:]]
-                        else:
-                            self.node[id].footprint[id].append(query[i+1:])
+                    if query[i+1:] not in self.node[id].footprint:
+                        self.node[id].footprint.append(query[i+1:])
                         self.thread[id] = query[i+1:]
                 id = self.node[id].failure
             id = self.goto(id, query[i])
