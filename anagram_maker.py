@@ -17,20 +17,21 @@ class AnagramMaker:
         with open(self.origin, "r") as f:
             for line in f:
                 word = line.lower().strip()
-                char_list = list(word)
-                char_list.sort()
-                sign = "".join(char_list)
-            
+                if "qu" in word: word = word.replace("qu", "q")
+                chars = list(word)
+                chars.sort()
+                sign = "".join(chars)
+                
                 d[sign].add(word)
-
         return d
 
-    def sort(self, sign_dict):
-        return OrderedDict(sorted(sign_dict.items()))
+    def sort(self, dict):
+        return OrderedDict(sorted(dict.items()))
 
-    def output(self, anagram_dict):
+    def output(self):
+        anagrams = self.sort(self.sign())
         with codecs.open(self.dest, "w", "utf-8") as f:
-            for k, v in anagram_dict.items():
+            for k, v in anagrams.items():
                 f.write("%s %s\n" %(k, " ".join(v)))
 
     def format(self):
@@ -47,7 +48,7 @@ class AnagramMaker:
 
 if __name__ == '__main__':
     anagram_maker = AnagramMaker("./dict/original_words", "./dict/anagram_words")
-    anagram_maker.output(anagram_maker.sort(anagram_maker.sign()))
+    anagram_maker.output()
 
     anagram_maker = AnagramMaker("./dict/anagram_words", "./dict/anagram_words.py")
     anagram_maker.format()
