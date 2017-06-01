@@ -123,11 +123,12 @@ class Anagram(object):
             print("{0}: {1}".format(dict.data[word][0], point*point))
         return high_score_word, high_score*high_score
 
-    def find(self, word=input("--> ")):
+    def find(self, word):
         """Find anagram matching dictionary."""
         if len(word) < 3:
             print("at least 3 chars")
-            return self.find(input("--> "))
+            return
+            #return self.find(input("--> "))
 
         word = word.lower().strip()
         print("input: " + word)
@@ -143,10 +144,11 @@ class Anagram(object):
             sign, high_score = self.high_score(matched_words)
             print("-- recomended word --")
             print("{0}: {1}".format(dict.data[sign][0], high_score))
+            return dict.data[sign][0]
 
-        return self.find(input("--> "))
+        #return self.find(input("--> "))
 
 
 if __name__ == '__main__':
     anagram = Anagram()
-    anagram.find()
+    anagram.find(input("--> "))
