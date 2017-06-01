@@ -120,7 +120,6 @@ class Anagram(object):
                 high_score = point
                 high_score_word = word
 
-            #print("{0}: {1}".format(dict.data[word][0], point*point))
         return high_score_word, high_score*high_score
 
     def find(self, word):

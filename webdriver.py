@@ -37,4 +37,3 @@ if __name__ == '__main__':
     webdriver = WebDriver()
     for i in range(10):
         webdriver.solve()
-    # webdriver.close()
