@@ -6,7 +6,7 @@ import itertools
 from dict import anagram_words as dict
 
 
-class Node:
+class Node(object):
     def __init__ (self, id):
         self.id   = id
         self.next = {}
@@ -15,7 +15,7 @@ class Node:
         self.footprint = {}
 
 
-class Trie:
+class Trie(object):
     def __init__ (self, dict):
         self.matched_words = set()
         self.thread = {}
@@ -96,8 +96,7 @@ class Trie:
         return list(self.matched_words)
 
 
-class Searcher:
-
+class Searcher(object):
     def __init__(self):
         sign_list = dict.data.keys()
         self.trie = Trie(sign_list)

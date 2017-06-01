@@ -1,6 +1,6 @@
 # Lex of Anagrams
 
-Solve puzzles of anagrams
+Solve puzzles of anagrams (Python 3.6.0)
 
 ## Usage
 

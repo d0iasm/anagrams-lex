@@ -5,7 +5,7 @@ from collections import defaultdict, OrderedDict
 import codecs
 
 
-class AnagramMaker:
+class AnagramMaker(object):
 
     def __init__(self, origin, dest):
         self.origin = origin
@@ -21,7 +21,6 @@ class AnagramMaker:
                 chars = list(word)
                 chars.sort()
                 sign = "".join(chars)
-                
                 d[sign].add(word)
         return d
 
@@ -43,7 +42,6 @@ class AnagramMaker:
         with codecs.open(self.dest, "w", "utf-8") as f:
             f.write("data = ")
             f.write(str(anagram_dict))
-
 
 
 if __name__ == '__main__':
