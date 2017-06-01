@@ -71,7 +71,6 @@ class Trie:
     def lookup(self, query, id=0):
         """Look up all words matching the dict from Trie"""
 
-        print("input query: "+query)
         for i in range(len(query)):
             output = self.node[id].output
             if not len(output) == 0:
@@ -81,7 +80,7 @@ class Trie:
             while self.goto(id, query[i]) is None:
                 if len(query[i:]) > 1:
                     if not query[i+1:] in self.node[id].footprint.get(id, ""):
-                        
+
                         if not id in self.node[id].footprint:
                             self.node[id].footprint[id] = [query[i+1:]]
                         else:
@@ -104,25 +103,26 @@ class Searcher:
         self.trie = Trie(sign_list)
 
     def high_score(self, words_list):
-        point_list = [0] * len(words_list)
-        high_score_index = 0
+        high_score_word = words_list[0]
+        high_score = 0
 
         three_points = ['j', 'k', 'q', 'x', 'z']
         two_points = ['c', 'f', 'h', 'l', 'm', 'p', 'v', 'w', 'y']
 
-        for i in range(len(words_list)):
-            point_list[i] += 1
+        for word in words_list:
+            point = len(word) + 1
             for char in three_points:
-                if char in words_list[i]: point_list[i] += 1
+                point += word.count(char) * 2
 
             for char in two_points:
-                if char in words_list[i]: point_list[i] += 2
+                point += word.count(char)
 
-            if not i == 0:
-                point_list[i-1] < point_list[i]
-                high_score_index = i
-
-        return words_list[high_score_index]
+            if high_score < point:
+                high_score = point
+                high_score_word = word
+            
+            print("{0}: {1}".format(dict.data[word][0], point*point))
+        return high_score_word, high_score*high_score
 
     def search(self, word=input("--> ")):
         if len(word) < 3:
@@ -140,11 +140,9 @@ class Searcher:
         if len(matched_words) == 0:
             print("not find anagrams")
         else:
-            for i in matched_words:
-                print(dict.data[i])
-            #print(matched_words)
-            high_score_sign = self.high_score(matched_words)
-            print(dict.data[high_score_sign])
+            sign, high_score = self.high_score(matched_words)
+            print("recomended word")
+            print("{0}: {1}".format(dict.data[sign][0], high_score))
 
         return self.search(input("--> "))
 
